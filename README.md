@@ -1,6 +1,9 @@
 # Simpler CRYSTALS-Kyber integration
 
 This shows an example of easier embed for Win32 projects.
+I didn't thoroughly study all the defines PQClean's code is making, be advised.
+
+This newer commit shows that you can just include the source file and be gucci for the clean version, it inlines more aggressively.
 
 ## Measurements on 7950X
 

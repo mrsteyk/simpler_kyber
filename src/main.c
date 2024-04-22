@@ -5,10 +5,12 @@
 
 // NOTE(mrsteyk): Inline api.h
 // NOTE(mrsteyk): If those sizes were inconsistent that would've been a fucking spec violation lol
+#if KYBER768_AVX2 || KYBER768_AARCH64
 #define PQCLEAN_KYBER768_CLEAN_CRYPTO_SECRETKEYBYTES  2400
 #define PQCLEAN_KYBER768_CLEAN_CRYPTO_PUBLICKEYBYTES  1184
 #define PQCLEAN_KYBER768_CLEAN_CRYPTO_CIPHERTEXTBYTES 1088
 #define PQCLEAN_KYBER768_CLEAN_CRYPTO_BYTES           32
+#endif
 
 #if KYBER768_AVX2
 int PQCLEAN_KYBER768_AVX2_crypto_kem_keypair(uint8_t *pk, uint8_t *sk);
@@ -23,9 +25,14 @@ int PQCLEAN_KYBER768_AVX2_crypto_kem_dec(uint8_t *ss, const uint8_t *ct, const u
 #elif KYBER768_AARCH64
 #error "AARCH64"
 #else
+// NOTE(mrsteyk): ecksde
+#include "../pqclean/kyber768/clean/amalgamated.c"
+
+/*
 int PQCLEAN_KYBER768_CLEAN_crypto_kem_keypair(uint8_t *pk, uint8_t *sk);
 int PQCLEAN_KYBER768_CLEAN_crypto_kem_enc(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
 int PQCLEAN_KYBER768_CLEAN_crypto_kem_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk);
+*/
 
 #define kyber768_crypto_kem_keypair(pk, sk) PQCLEAN_KYBER768_CLEAN_crypto_kem_keypair(pk, sk)
 #define kyber768_crypto_kem_enc(ct, ss, pk) PQCLEAN_KYBER768_CLEAN_crypto_kem_enc(ct, ss, pk)
